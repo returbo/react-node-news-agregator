@@ -3,3 +3,13 @@ body {
   margin: 0;
   font-family: Helvetica, sans-serif, Tahoma, Arial;
 }
+
+.post {
+  margin: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 15px;
+}
+
+.post__image {
+  flex: 0.3;
+}

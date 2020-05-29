@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import Post from './components/Post';
 
 class App extends Component {
   render() {
     return (
-      <h1>Hello world!</h1>
+      <div>
+        <Post 
+          title="NEW LEGEND"
+          description="tetetetetetetetetetetete"
+          image=""
+        />
+      </div>
+      
     );
   }
 }
