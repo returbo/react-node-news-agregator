@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import Post from './components/Post';
+import posts from './posts.json';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Post 
-          title="NEW LEGEND"
-          description="tetetetetetetetetetetete"
-          image=""
-        />
+        {
+          posts.map(({title, description, image}, key) => (
+              <Post
+                key={key}
+                title={title}
+                description={description}
+                image={image}
+              />
+          ))
+        }
       </div>
-      
     );
   }
 }
