@@ -11,4 +11,3 @@ parsePost(
 //     elems.magastimes
 // );
 
-console.log('test lol');

@@ -1,10 +1,10 @@
 import unirest from "unirest";
 import cheerio from "cheerio";
 
-async function parsePost(url, { title, image, attr, text, views }) {
-    await unirest.get(url).end(function (response) {
 
-        const body = response.body;
+ function parsePost(url, { title, image, attr, text, views }) {
+    unirest.get(url).end( ( { body } ) => {
+
         const $ = cheerio.load(body);
 
         const parseDomain = url.match(/\/\/(.*?)\//)[1];
