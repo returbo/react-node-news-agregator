@@ -8,8 +8,6 @@ import store from './store';
 
 import './index.css';
 
-console.log(store.getState());
-
 render(
   <Provider store={store}>
     <App />

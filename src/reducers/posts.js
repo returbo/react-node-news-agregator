@@ -1,7 +1,7 @@
 // import posts from '../posts.json';
 
 const initialState = {
-    posts: [],
+    items: [],
 }; 
 
 export default function(state = initialState, action) {
@@ -9,6 +9,7 @@ export default function(state = initialState, action) {
         case 'SET_POSTS':
             return {
                 ...state,
+                items: action.payload,
             };
         case 'REMOVE_POST':
             return {
