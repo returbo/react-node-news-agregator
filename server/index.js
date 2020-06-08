@@ -6,8 +6,8 @@ parsePost(
     elems.riadagestan
     );
 
-// parsePost(
-//     'http://magastimes.ru/ingushskie-sudby-v-ekspozicii-gosudarstvennogo-muzeya-istorii-gulaga/',
-//     elems.magastimes
-// );
+parsePost(
+    'http://magastimes.ru/ingushskie-sudby-v-ekspozicii-gosudarstvennogo-muzeya-istorii-gulaga/',
+    elems.magastimes
+);
 
