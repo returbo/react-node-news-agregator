@@ -1,26 +1,21 @@
 import { parseLinks, getPosts, parsePost } from './parsePost';
 import fs from 'fs';
-import { elems } from './configs';
+// import { elems } from './configs';
 
 
 
+const saveResult = (json) => {
+    fs.writeFile('result.json', json, (err) => {
+        if (err) console.log('NOT SAVED!')
+    });
+};
 
+const urlPage = 'http://magastimes.ru';
 
-
-
-
-// const saveResult = (json) => {
-//     fs.writeFile('result.json', json, (err) => {
-//         if (err) console.log('NOT SAVED!')
-//     });
-// };
-
-// const urlPage = 'http://magastimes.ru';
-
-// parseLinks(urlPage, '.td-module-title a')
-// .then(links => {
-//     getPosts(links).then(posts => saveResult(posts));
-// }).catch(e => console.log(e));
+parseLinks(urlPage, '.td_block_16 .td-module-title a')
+.then(links => {
+    getPosts(links).then(posts => saveResult(JSON.stringify(posts, 0, 4)));
+}).catch(e => console.log(e));
 
 
 

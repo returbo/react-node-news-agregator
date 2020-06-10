@@ -2,12 +2,15 @@ import unirest from "unirest";
 import cheerio from "cheerio";
 import { elems } from './configs';
 
-const log = (i, count, ms) => new Promise(r => setTimeout(() => {
-    console.log(`
+const log = (i, count, ms) =>
+    new Promise((resolve) => setTimeout( () => { 
+        console.log(`
         ИНДЕКС: ${i};
         Всего записей: ${count}
-    `)
-}, ms));
+        `);
+        resolve();
+        }, ms)
+    );
 
 function parsePost(url, { title, image, attr, text, views }) {
     return new Promise((resolve, reject) => {
@@ -58,11 +61,14 @@ function parseLinks(url, className, maxLinks = 5) {
                 }
             });
 
+            if (!links.length) reject({ error: 'NO LINKS!' });
             resolve(links);
-            if (!links.length) reject({ error: 'empty' });
+
         });
     });
 }
+
+
 
 async function getPosts(links) {
     return new Promise(async (resolve, reject) => {
@@ -73,13 +79,13 @@ async function getPosts(links) {
         for (let i = 0; i < count; i++) {
             const post = await parsePost(
                 links[i],
-                elems.riadagestan
+                elems.magastimes
             ).then(post => post);
             posts.push(post);
-            await log(i, count, 2000);
+            await log(i + 1, count, 1000);
         }
 
-        if (!posts.length) reject({ error: 'empty' });
+        if (!posts.length) reject({ error: 'NO POSTS DATA SAVED!' });
         resolve(posts);
     })
 }
