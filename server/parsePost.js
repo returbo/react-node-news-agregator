@@ -1,6 +1,5 @@
 import unirest from "unirest";
 import cheerio from "cheerio";
-import { elems } from './configs';
 
 const log = (i, count, ms) =>
     new Promise((resolve) => setTimeout( () => { 
@@ -30,6 +29,7 @@ function parsePost(url, { title, image, attr, text, views }) {
             const parseViews = $(views).text().trim();
 
             const post = {
+                url,
                 parseTitle,
                 parseImage,
                 parseText,
@@ -70,7 +70,7 @@ function parseLinks(url, className, maxLinks = 5) {
 
 
 
-async function getPosts(links) {
+async function getPosts(links, element) {
     return new Promise(async (resolve, reject) => {
 
         let posts = [];
@@ -79,10 +79,10 @@ async function getPosts(links) {
         for (let i = 0; i < count; i++) {
             const post = await parsePost(
                 links[i],
-                elems.magastimes
+                element
             ).then(post => post);
             posts.push(post);
-            await log(i + 1, count, 1000);
+            await log(i + 1, count, 500);
         }
 
         if (!posts.length) reject({ error: 'NO POSTS DATA SAVED!' });
