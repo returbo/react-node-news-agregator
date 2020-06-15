@@ -1,16 +1,6 @@
 import unirest from "unirest";
 import cheerio from "cheerio";
 
-const log = (i, count, ms) =>
-    new Promise((resolve) => setTimeout( () => { 
-        console.log(`
-        ИНДЕКС: ${i};
-        Всего записей: ${count}
-        `);
-        resolve();
-        }, ms)
-    );
-
 function parsePost(url, { title, image, attr, text, views }) {
     return new Promise((resolve, reject) => {
 
@@ -82,7 +72,6 @@ async function getPosts(links, element) {
                 element
             ).then(post => post);
             posts.push(post);
-            await log(i + 1, count, 500);
         }
 
         if (!posts.length) reject({ error: 'NO POSTS DATA SAVED!' });

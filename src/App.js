@@ -2,65 +2,80 @@ import React, { Component } from 'react';
 import Post from './components/Post';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {
+  Container,
+  Header,
+  Item,
+  Button,
+} from 'semantic-ui-react';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
   }
 
-  fetchPosts() {
+  fetchPosts(resource) {
     const { setPosts } = this.props;
-    axios.get('https://5ed9d9294378690016c6b3ec.mockapi.io/posts')
+    axios.get(`https://5ed9d9294378690016c6b3ec.mockapi.io/${resource}`)
       .then(({ data }) => {
         setPosts(data);
       });
   }
 
+  regionText(s) {
+    switch (s) {
+      case "ING":
+        this.fetchPosts('magastimes');
+        return "Ингушетия";
+      case "DAG":
+        this.fetchPosts('riadagestan');
+        return "Дагестан";
+      default:
+        break;
+    }
+  }
+
   render() {
-    const { items } = this.props.posts;
+    const { posts, regions } = this.props;
     return (
-      <div>
-        <div>
-          <button onClick={() => this.fetchPosts()}>Загрузить посты</button>
-          <h3>Регион: {this.props.regions.region}</h3>
-          <ul>
-            <li>
-              <button
-                onClick={() => this.props.changeRegion('ING')}
-              >
-                Ингушетия
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => this.props.changeRegion('DAG')}
-              >
-                Дагестан
-              </button>
-            </li>
-          </ul>
-        </div>
-        {!items.length ? (
-          <span>Loading...</span>
-        ) : (
-            items.map(({ title, description, image }, key) => (
-              <Post
-                key={key}
-                title={title}
-                description={description}
-                image={image}
-              />
-            ))
-          )}
-      </div>
+      <Container>
+        <Header as='h1'>Парсер новостей с magastimes.ru и riadagestan.ru</Header>
+        <Header as='h2'>Регион: {this.regionText(regions.region)}</Header>
+        <Button.Group>
+          <Button onClick={() => this.props.changeRegion('ING')}>
+            Ингушетия
+            </Button>
+          <Button onClick={() => this.props.changeRegion('DAG')}>
+            Дагестан
+            </Button>
+        </Button.Group>
+        <Item.Group divided>
+          {regions.region === ""
+              ? <div></div>
+              : !posts.length
+                ? <div class="ui active centered inline loader"></div>
+                : (
+                  posts.map((item, key) => (
+                    <Post
+                      key={key}
+                      {...item}
+                    />
+                  ))
+                )}
+        </Item.Group>
+      </Container>
     );
   }
 }
 
-const state = props => {
+const state = ({ posts, regions }) => {
+  const sortedPosts = posts.items.length
+    ? posts.items.sort((a, b) => a.parseViews - b.parseViews).reverse()
+    : [];
   return {
-    loading: true,
-    ...props,
+    posts: sortedPosts,
+    regions
   };
 };
 

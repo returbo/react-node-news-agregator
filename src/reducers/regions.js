@@ -1,5 +1,5 @@
 const initialState = {
-    region: 'ING'
+    region: ''
 };
 
 export default function(state = initialState, action) {

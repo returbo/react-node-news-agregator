@@ -1,17 +1,24 @@
 import React from 'react';
+import { Item, Label } from 'semantic-ui-react'
 
-const Post = ({ title, image, description }) => {
+const setText = (s) =>
+    s.length >= 300
+        ? s.substr(0, 300) + "..."
+        : s;
+
+
+const Post = ({ url, parseTitle, parseImage, parseText , parseViews }) => {
     return (
-        <div className="post">
-            <div 
-                className="post__image" 
-                style={{backgroundImage: `url(${image})` }}
-            />
-            <div className="post__info">
-                <h2 className="post__title">{title}</h2>
-                <p className="post__description">{description}</p>
-            </div>
-        </div>
+        <Item>
+            <Item.Image src={parseImage} />
+            <Item.Content>
+                <Item.Header as='a' href={url} target='_blank'>{parseTitle}</Item.Header>
+                <Item.Description>{setText(parseText)}</Item.Description>
+                <Item.Extra>
+                    <Label icon='eye' content={parseViews} />
+                </Item.Extra>
+            </Item.Content>
+        </Item>
     )
 }
 

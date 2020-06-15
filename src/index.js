@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import './index.css';
+import './styles/index.css';
+import './styles/semantic.min.css';
 
 render(
   <Provider store={store}>
