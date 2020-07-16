@@ -3,8 +3,7 @@
   ## Aplied technology:
   
   - React
-  - Redux
-  - SCSS
+  - Node.js
   
   ### `node packets:`
   
